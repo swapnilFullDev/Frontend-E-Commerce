@@ -1,0 +1,81 @@
+/* src/app/globals.css */
+@import "tailwindcss";
+
+/* =========================
+   CSS VARIABLES
+   ========================= */
+:root {
+    --color-primary: #2F4157;
+    --color-primary-hover: #263647;
+    --color-cream: #F8F5EF;
+
+    --color-text-primary: #2F4157;
+    --color-text-secondary: #6B7280;
+}
+
+/* =========================
+   GLOBAL UTILITIES
+   ========================= */
+
+/* =========================
+   TAILWIND UTILITIES LAYER
+   ========================= */
+@layer utilities {
+    .bg-primary {
+        background-color: var(--color-primary);
+    }
+
+    .bg-primary-hover:hover {
+        background-color: var(--color-primary-hover);
+    }
+
+    .bg-cream {
+        background-color: var(--color-cream);
+    }
+
+    .text-primary {
+        color: var(--color-primary);
+    }
+
+    .border-primary {
+        border-color: var(--color-primary);
+    }
+
+    .dancing-script {
+        font-family: var(--font-dancing-script);
+    }
+}
+
+/* Backgrounds */
+.bg-primary {
+    background-color: var(--color-primary);
+}
+
+.bg-primary-hover:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.bg-cream {
+    background-color: var(--color-cream);
+}
+
+/* Text colors */
+.text-primary {
+    color: var(--color-text-primary);
+}
+
+.text-secondary {
+    color: var(--color-text-secondary);
+}
+
+/* Borders */
+.border-primary {
+    border-color: var(--color-primary);
+}
+
+/* =========================
+   FONT UTILITIES
+   ========================= */
+.dancing-script {
+    font-family: var(--font-dancing-script);
+}
