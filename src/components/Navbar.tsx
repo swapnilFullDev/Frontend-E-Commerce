@@ -3,9 +3,21 @@
 import Link from 'next/link'
 import { Search, Heart, ShoppingCart, User, Menu } from 'lucide-react'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAuth } from '@/app/providers/auth-provider'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { isAuthenticated } = useAuth()
+  const router = useRouter()
+
+  const handleUserClick = () => {
+    if (isAuthenticated) {
+      router.push('/profile')
+    } else {
+      router.push('/login')
+    }
+  }
 
   const categories = [
     { id: 'men', name: 'Men' },
@@ -68,9 +80,9 @@ const Navbar = () => {
             </Link>
 
             {/* Profile */}
-            <Link href="/profile" className="p-2 hover:bg-gray-100 rounded-lg">
+            <button onClick={handleUserClick} className="p-2 hover:bg-gray-100 rounded-lg">
               <User className="h-5 w-5 text-gray-600" />
-            </Link>
+            </button>
 
             {/* Mobile Menu Button */}
             <button

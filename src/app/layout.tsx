@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Dancing_Script } from "next/font/google";
+import { AuthProvider } from './providers/auth-provider';
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
@@ -52,11 +53,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={dancingScript.variable}>
       <body className="min-h-screen bg-cream flex flex-col">
-        <Navbar />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
+        <AuthProvider>
+          <Navbar />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   )
