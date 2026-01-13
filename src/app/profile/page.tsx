@@ -1,10 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { User, Mail, Phone, MapPin, Package, Heart, Settings } from 'lucide-react'
+import { User, Mail, Phone, MapPin, Package, Heart, Settings, LogOut } from 'lucide-react'
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/app/providers/auth-provider';
 
 export default function ProfilePage() {
-  const [activeTab, setActiveTab] = useState('profile')
+  const router = useRouter();
+  const { logout } = useAuth();
+  const [activeTab, setActiveTab] = useState('profile');
   const [profileData, setProfileData] = useState({
     firstName: 'John',
     lastName: 'Doe',
@@ -26,6 +30,12 @@ export default function ProfilePage() {
     alert('Profile updated successfully!')
   }
 
+  const handleLogout = () => {
+    logout();
+    router.push('/login');
+  };
+
+
   const orders = [
     { id: '#12345', date: '2024-01-15', status: 'Delivered', total: 299.99 },
     { id: '#12346', date: '2024-01-10', status: 'Shipped', total: 149.99 },
@@ -36,7 +46,8 @@ export default function ProfilePage() {
     { id: 'profile', label: 'Profile', icon: User },
     { id: 'orders', label: 'Orders', icon: Package },
     { id: 'wishlist', label: 'Wishlist', icon: Heart },
-    { id: 'settings', label: 'Settings', icon: Settings }
+    { id: 'settings', label: 'Settings', icon: Settings },
+    { id: 'logout', label: 'Logout', icon: LogOut }
   ]
 
   return (
@@ -260,6 +271,40 @@ export default function ProfilePage() {
                   </div>
                 </div>
               )}
+
+              {activeTab === 'logout' && (
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Logout</h2>
+
+                  <div className="space-y-6">
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-5">
+                      <h3 className="font-semibold text-red-600 mb-2">
+                        Are you sure you want to logout?
+                      </h3>
+                      <p className="text-gray-700 text-sm">
+                        You will be logged out from your account and redirected to the login page.
+                      </p>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <button
+                        className="bg-red-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-600 transition-colors"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </button>
+
+                      <button
+                        className="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                        onClick={() => setActiveTab('settings')}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
             </div>
           </div>
         </div>

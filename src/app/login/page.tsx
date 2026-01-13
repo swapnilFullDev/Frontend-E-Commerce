@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { Eye, EyeOff, Mail, Lock, LogIn } from 'lucide-react'
 import { authService } from '@/services/authService'
 import { useRouter } from 'next/navigation'
+import { authCookies } from '@/utils/auth'
+import { useAuth } from '@/app/providers/auth-provider';
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -15,6 +17,8 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const { login } = useAuth();
+
   
   const router = useRouter()
 
@@ -38,11 +42,12 @@ export default function LoginPage() {
         password: formData.password
       })
 
-      if (response.message === 'Login successful' && response.token) {
+      if (response.token) {
         localStorage.setItem('accessToken', response.token)
         localStorage.setItem('userId', response.userId.toString())
         localStorage.setItem('userRole', response.role)
         localStorage.setItem('fullName', response.fullName)
+        login(response)
         router.push('/')
       }
     } catch (error: any) {
@@ -141,7 +146,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-primary text-black border py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-primary text-white border py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Signing In...' : 'Sign In'}
             </button>
